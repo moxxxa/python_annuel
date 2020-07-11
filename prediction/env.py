@@ -7,7 +7,7 @@ import sklearn, os
 from os import path
 from google_drive_downloader import GoogleDriveDownloader as gdd
 
-RESSOURCE_PATH = "./prediction/ressource/"
+RESSOURCE_PATH = "./ressource/"
 
 RB_REQUEST_SELECT = 'SELECT home_goal, away_goal FROM rbComportement WHERE id_home LIKE "%{}%" and id_away LIKE "%{}%" '
 RB_REQUEST_INSERT = "INSERT INTO rbComportement (id_home, id_away, home_goal, away_goal) VALUES ('{}', '{}', {}, {})"
