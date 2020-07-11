@@ -14,19 +14,20 @@ channel = connection.channel() # start a channel
 
 app = Flask(__name__)
 cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 @app.route("/")
 @cross_origin()
 def index():
-	print("serveur chargé")
+    print("serveur chargé")
 
-	channel.queue_declare(queue='predict_match')
+    channel.queue_declare(queue='predict_match')
 
-	channel.basic_consume(queue="predict_match", on_message_callback=predictMatchCallBack, auto_ack=True)
-	channel.basic_consume(queue="predict_tournament", on_message_callback=predictTournamentCallBack, auto_ack=True)
+    channel.basic_consume(queue="predict_match", on_message_callback=predictMatchCallBack, auto_ack=True)
+    channel.basic_consume(queue="predict_tournament", on_message_callback=predictTournamentCallBack, auto_ack=True)
 
-	channel.start_consuming()
+    channel.start_consuming()
     return "<h1>Weclome to the client-lourd"
 
 def postPredictMatchResponse(result):
@@ -96,3 +97,6 @@ def predictTournamentCallBack(ch, method, properties, body):
 
 
 initViews()
+
+if __name__ == '__main__':
+    app.run()
